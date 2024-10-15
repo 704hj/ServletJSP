@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>점심 선택</title>
+</head>
+<body>
+	<h3>오늘 점심은 무엇을 먹을까?(2개이상 선택)</h3>
+	<!-- ServletJSP : 컨텍스트 루트 -> 프로그램의 시작-->
+	<form action="/ch03_ServletJSP/todayMenu" method="post">
+	                       <!-- name이 같아야 함-->
+		<input type="checkbox" name="lunch" value="떡볶이">떡볶이
+		<input type="checkbox" name="lunch" value="치킨">치킨
+		<input type="checkbox" name="lunch" value="피자">피자
+		<input type="checkbox" name="lunch" value="돈까스">돈까스
+		<input type="checkbox" name="lunch" value="닭갈비">닭갈비
+		<input type="checkbox" name="lunch" value="치즈김밥">치즈김밥
+		<input type="submit" value="전송">
+	</form>
+</body>
+</html>
