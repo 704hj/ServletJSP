@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>구구단 입력</title>
+</head>
+<body>
+<h1>구구단 단 입력</h1>
+<!--action : 데이터를 전송할 서버(서블릿) 주소  method : 데이터 전송 방식 -->
+<form action="/ch03_ServletJSP/gugudan" method="get">
+단 <input type="number" name="dan" min="2" max="9"><br>
+<input type="submit" value="전송"></form>
+</body>
+</html>
+
+ <!-- GugudanServlet 에서 작성한 후 gugudanForm.html에서 실행
+  실행 후 name="dan" 에 값 입력하면 getParameter("dan")으로 값이 전송되면서 실행-->
