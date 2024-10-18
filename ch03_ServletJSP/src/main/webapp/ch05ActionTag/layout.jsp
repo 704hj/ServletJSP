@@ -37,14 +37,14 @@
 	<tr>
 		<td colspan="2">
 			<%-- include 태그의 내용으로 html 주석, jsp 주석 전부 사용 불가 --%>
-			<jsp:include page="/ch05ActinnTag/module/top.jsp">
+			<jsp:include page="/ch05ActionTag/module/top.jsp">
 				<jsp:param value="StarShop 서비스" name="company"/>
 			</jsp:include>
 		</td>
 	</tr>
 	<tr>
 		<td class="td-middle td-width">
-			<jsp:include page="/ch05ActinnTag/module/left.jsp"/>
+			<jsp:include page="/ch05ActionTag/module/left.jsp"/>
 		</td>
 		<td class="td-middle">
 		<!-- 내용 시작 -->
@@ -54,7 +54,7 @@
 	</tr>
 	<tr>
 		<td colspan="2">
-			<jsp:include page="/ch05ActinnTag/module/bottom.jsp"/>
+			<jsp:include page="/ch05ActionTag/module/bottom.jsp"/>
 		</td>
 	</tr>
 </table>
