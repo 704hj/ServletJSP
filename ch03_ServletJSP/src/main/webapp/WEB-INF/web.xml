@@ -17,6 +17,12 @@
 		<location>/ch06ErrorPage/error/errorNullPointer.jsp</location>
 	</error-page>
 	<!-- 에러 타입별 에러 페이지 지정 끝 -->
+	
+	<!-- 세션 유지 시간 지정 (분단위로 지정) 시작 -->
+	<session-config>
+		<session-timeout>50</session-timeout>
+	</session-config>
+	<!-- 세션 유지 시간 지정 (분단위로 지정) 끝 -->
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
