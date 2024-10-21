@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
+import kr.util.FileUtil;
+
 @MultipartConfig(
 		maxFileSize = 1024 * 1024 * 10,//1개당 10메가->서버의 성능과 비례해서 업로드크기 정해야함
 		maxRequestSize = 1024 * 1024 * 50
@@ -58,8 +60,8 @@ public class UploadServlet2 extends HttpServlet{
 			//코드 간소화
 			Collection<Part> parts = request.getParts();
 			for(Part p : parts) {
-				String fileName = p.getSubmittedFileName();
-				if(!fileName.isEmpty()) {
+				String fileName = FileUtil.getFilename(p.getHeader("Content-Disposition"));
+				if(fileName!=null) {
 					p.write(realFolder+"/"+fileName);
 					out.println("<img src=\"/ch03_ServletJSP/upload/"+fileName+"\"><br>");
 				}
