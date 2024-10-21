@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery를 이용한 비동기 통신 구현</title>
+<script type="text/javascript" src="../js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+/*
+ * AJAX(Asynchronous Javascript And XML) : 자바스크립트와 XML를 이용한 비동기 통신
+ */
+ 	$(document).ready(function(){
+		//text 정보를 읽어 옴->객체 형식으로 호출
+		$.ajax({//ajax가 'myString.jsp를 요청/호출함->다른 작업이 있으면 응답 올 동안 다른 작업 처리 먼저 가능->응답이 오면 ajax에 저장되고 ajax는 다시 (param)에 데이터 전달->출력
+			url:'myString.jsp',//ajax에 정상적으로 데이터 전달되면 success작동
+			success:function(param){//서버의 응답이 성공했을 때 호출
+				$('body').append(param);				
+			}
+		});
+ });
+ 
+</script>
+</head>
+<body>
+
+</body>
+</html>
