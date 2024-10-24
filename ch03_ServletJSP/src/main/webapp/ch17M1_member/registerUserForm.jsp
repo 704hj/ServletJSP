@@ -13,7 +13,7 @@
 							//1: 아이디 미중복
 		let count =0;
 		
-		$('#confirm_id').click(function () {
+		$('#confirm_id').click(function() {
 			if($('#id').val().trim()==''){
 				alert('아이디를 입력하세요!');
 				$('#id').val('').focus();

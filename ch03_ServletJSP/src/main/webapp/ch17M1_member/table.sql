@@ -19,7 +19,7 @@ create table sboard(
  content clob not null,
  ip varchar2(30) not null,
  reg_date date default sysdate not null,
- num number not null,
+ num number not null,--작성자
  constraint sboard_pk primary key (board_num),
  constraint sboard_fk foreign key (num) references smember (num)
 );
