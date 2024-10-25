@@ -39,7 +39,7 @@
 		const delete_btn = document.getElementById('delete_btn');
 		//이벤트 연결
 		delete_btn.onclick=function(){
-			let choice = confirm('삭제하기겠습니까?');
+			let choice = confirm('삭제하시겠습니까?');
 			if(choice){
 				location.replace('delete.jsp?board_num=<%= board_num %>');
 			}
