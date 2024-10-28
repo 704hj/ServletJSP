@@ -25,6 +25,7 @@
 <h4>int형 배열</h4>
 <c:set var="intArray" value="<%=new int[]{10,20,30,40,50} %>"/>
 <c:forEach var="i" items="${intArray}" begin="2" end="4" varStatus="status">
+        <!-- 인덱스,            반복회차 -->
 	${status.index} - ${status.count} - [${i}]<br>
 </c:forEach>
 </body>
