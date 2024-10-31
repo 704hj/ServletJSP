@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 헤더 시작 -->
 <div id="main_logo">
-    <h1><a>회원제 게시판</a></h1>
+    <h1 class="align-center"><a>회원제 게시판</a></h1>
 </div>
 <div id="main_nav">
     <ul>
