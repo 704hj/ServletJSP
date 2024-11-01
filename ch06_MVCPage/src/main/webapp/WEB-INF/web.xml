@@ -12,6 +12,11 @@
   		<param-name>viewPath</param-name>
   		<param-value>/WEB-INF/views/</param-value>
   	</init-param>
+  	<!-- 파일 업로드 용량 지정 -->
+  	<multipart-config>
+  		<max-file-size>5242880</max-file-size><!-- 5M  -->
+  		<max-request-size>52428800</max-request-size><!-- 50M  -->
+  	</multipart-config>
   </servlet>
   <servlet-mapping>
   	<servlet-name>DispatcherServlet</servlet-name>

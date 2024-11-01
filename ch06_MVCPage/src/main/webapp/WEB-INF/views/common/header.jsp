@@ -7,10 +7,24 @@
 </div>
 <div id="main_nav">
     <ul>
+    	<c:if test="${!empty user_num}">
+    	<li><a href="${pageContext.request.contextPath}/member/myPage.do">MY페이지</a></li>
+    	</c:if>
+    	
+    	<!-- 프로필사진 표시 시작-->
+    	<c:if test="${!empty user_num && !empty user_photo}">
+    	<li><img src="${pageContext.request.contextPath}/upload/${user_photo}" width="25" height="25" class="my-photo"></li>
+    	</c:if>
+    	
+    	<c:if test="${!empty user_num && empty user_photo}">                                                             <%-- 이미지가 원으로 보임 --%>
+    	<li class="menu-profile"><img src="${pageContext.request.contextPath}/images/face.png" width="25" height="25" class="my-photo"></li>
+    	</c:if>
+    	<!-- 프로필사진 표시 끝-->
+    	
         <c:if test="${!empty user_num}">
             <li class="menu-logout">
                 [<span>${user_id}</span>]
-                <a href="${pageContext.request.contextPath}/member/logut.do">로그아웃</a>
+                <a href="${pageContext.request.contextPath}/member/logout.do">로그아웃</a>
             </li>
         </c:if>
         <c:if test="${empty user_num}">

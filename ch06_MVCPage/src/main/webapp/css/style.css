@@ -82,9 +82,109 @@ a:hover{
 	width:25px;
 }
 #main_nav ul li.menu-logout{
-	width:150px;
+	width:180px;
 	text-align:left;
 }
+
+/* 공통등록,수정폼 */
+form{
+    width:600px;
+    margin:0 auto;
+    border:1px solid #000;
+    padding:10px 10px 10px 30px;
+}
+form ul li label{
+	width:130px;
+	display:inline-block;
+}
+ul{
+    list-style:none;
+}
+input,select{
+	margin-top:4px;
+}
+textarea{
+	margin-top:4px;
+	width:312px;
+}
+input[type="text"],input[type="password"],input[type="email"]{
+	width:310px;
+}
+#register_form input[id="id"]{
+	width:223px;
+}
+input[id="zipcode"]{
+	width:205px;
+}
+input[id="number"]{
+	width:100px;
+}
+.form-notice{
+	matgin-left:130px;
+}
+label{
+    width:130px;
+    float:left;
+}
+
+/* 로그인
+--------------------------------*/
+#login_form{
+	width:300px;
+	margin:0 auto;
+	padding:0;
+	border:none;
+}
+#login_form ul{
+	padding:0;
+}
+.floating-label {/*floating label 설정*/
+  position: relative;
+}
+.floating-label > .form-input{
+  width:300px;	
+  height: 32px;
+  padding: 0.55rem 0.55rem;
+
+}
+.floating-label > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1.05rem 0.75rem;
+  transition: all 0.25s;
+}
+.floating-label > .form-input::placeholder{
+  color: transparent;
+}
+.floating-label > .form-input:focus, .floating-label > .form-input:not(:placeholder-shown){
+  padding-top: 1.125rem;
+  padding-bottom: 0.125rem;
+}
+.floating-label > .form-input:focus + label,
+.floating-label > .form-input:not(:placeholder-shown) + label{/*선택자A+선택자B : 선택자A 바로 뒤에 위치하는 선택자B만 선택*/
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(-0.5rem);
+}
+
+ /* MY 페이지 
+ --------------------------------------------------------*/
+ .mypage-div{
+ 	width:48%;
+ 	float:left;
+ 	padding:5px;
+ }
+ .mypage-end{
+ 	clear:both;
+ }
+ .my-photo{
+    object-fit:cover;
+    /*정사각형이 아니라 직사각형일 경우 원 안에 보여지게 할 중심 이미지의 위치를 지정*/
+    object-position:top;
+    border-radius:50%;
+}
+
+
 /* 목록 */
 table{
     width:100%;
@@ -95,18 +195,4 @@ table{
 table td, table th{
     border:1px solid #000;
     padding:5px;
-}
-/* 등록,수정폼 */
-form{
-    width:500px;
-    margin:0 auto;
-    border:1px solid #000;
-    padding:10px 10px 10px 30px;
-}
-ul{
-    list-style:none;
-}
-label{
-    width:130px;
-    float:left;
 }
