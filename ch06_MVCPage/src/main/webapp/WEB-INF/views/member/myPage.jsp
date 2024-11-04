@@ -39,8 +39,60 @@
 		reader.onload=function(){
 			$('.my-photo').attr('src',reader.result);
 			};
+		});//end of change
+		
+		//이미지 전송
+		$('#photo_submit').click(function(){
+			if($('#photo').val()==''){
+				alert('파일을 선택하세요!');
+				$('#photo').focus();
+				return;
+			}
+			//파일 전송
+			 const form_data = new FormData();
+			//업로드할 파일은 $('#photo').files[0]으로 호출할 수 없음->JQuery는 무조건 배열로 인식하기 때문
+			//document.getElementById('photo').files[0] 또는 
+			//$('#photo')[0].files[0]
+			form_data.append('photo',$('#photo')[0].files[0]);
+			
+			//서버와 통신
+			$.ajax({
+				url:'updateMyPhoto.do',
+				type:'post',
+				data:form_data,
+				dataType:'json',
+				contentType:false,//데이터 객체를 문자열로 바꿀지에 대한 값. true이면 일반 문자
+				processData:false,//해당 타입을 true로 하면 일반 text로 구분
+				success:function(param){
+					if(param.result == 'logout'){
+						alert('로그인 후 사용하세요!');
+					}else if(param.result == 'success'){
+						alert('프로필 사진이 수정되었습니다.');
+						//수정된 이미지 정보 저장
+						photo_path = $('.my-photo').attr('src');
+						$('#photo').val('');
+						$('#photo_choice').hide();
+						$('#photo_btn').show();//수정 버튼 표시
+					}else{
+						alert('파일 전송 오류 발생');
+					}
+				},
+				error:function(){
+					alert('네트워크 오류 발생');
+				}
+			});
+		});//end of click
+		
+		//이미지 미리보기 취소
+		$('#photo_reset').click(function(){
+			//초기 이미지 표시
+			$('.my-photo').attr('src',photo_path);//이미지 미리보기 전 이미지로 되돌리기
+			$('#photo').val('');
+			$('#photo_choice').hide();
+			$('#photo_btn').show();//수정 버튼 표시
 		});
-	});//end of change
+		
+	});
 	
 </script>
 </head>
@@ -88,6 +140,8 @@
 				<li>최근 정보 수정일 : ${member.modify_date}</li>
 				</c:if>
 			</ul>
+			<h3>비밀번호 수정<input type="button" value="비밀번호 수정" onclick="location.href='modifyPasswordForm.do'"></h3>
+			<h3>회원탈퇴 <input type="button" value="회원탈퇴" onclick="location.href='deleteUserForm.do'"></h3>
 		</div>
 		
 		<div class="mypage-div"></div>

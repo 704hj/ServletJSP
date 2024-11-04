@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<c:if test="${check}">
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원탈퇴</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
+
+</head>
+<body>
+<div class="page-main">
+    <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+        <div class="content-main">
+            <h2>회원탈퇴 완료</h2>
+            <div class="result-display">
+            회원탈퇴 완료 <p>
+            <input type="button" value="홈으로" onclick="location.href=''">
+            </div>
+        </div>
+</div>
+
+</body>
+</html>
+</c:if>
+
+<c:if test="${!check}">
+    <script>
+    alert('입력한 정보가 틀리다');
+    history.go(-1);
+	</script>
+</c:if>
