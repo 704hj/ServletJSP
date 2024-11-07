@@ -37,3 +37,12 @@ create table zboard(
  constraint zboard_fk foreign key (mem_num) references zmember (mem_num)
  );
  create sequence zboard_seq;
+ 
+ --좋아요 
+ --컬럼이 두개 이상이면 VO 만드는게 이점이다.
+create table zboard_fav(
+ board_num number not null,
+ mem_num number not null,
+ constraint zboard_fav_fk1 foreign key (board_num) references zboard (board_num),
+ constraint zboard_fav_fk2 foreign key (mem_num) references zmember (mem_num)
+ );

@@ -8,6 +8,7 @@
 <title>글 상세</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/board.fav.js"></script>
 </head>
 <body>
 <div class="page-main">
@@ -42,12 +43,33 @@
 		<ul class="detail-sub">
 			<li>
 				<%-- 좋아요 --%>
+				<img id="output_fav" data-num="${board.board_num}"
+					src="${pageContext.request.contextPath}/images/fav01.gif" width="50">
+					
+					좋아요
+					<span id="output_fcount"></</span>
 			</li>
 			<li>
 				<c:if test="${!empty board.modify_date}">
 				최근 수정일 : ${board.modify_date}
 				</c:if>
 				작성일 : ${board.reg_date}
+				<%-- 로그인한 회원번호와 작성자 회원번호가 일치해야 수정,삭제 가능 --%>
+				<c:if test="${user_num == board.mem_num}">						 <%-- ?뒤에 PK넘겨줘야함 --%>
+				<input type="button" value="수정" onclick="location.href='updateForm.do?board_num=${board.board_num}'">
+				<input type="button" value="삭제" id="delete_btn">
+				<script type="text/javascript">
+					const delete_btn = document.getElementById('delete_btn')
+					//이벤트 연결
+					delete_btn.onclick=function(){
+						let choice = confirm('삭제하시겠습니까?');
+						if(choice){
+							location.replace('delete.do?board_num=${board.board_num}');
+						}
+					}
+					
+				</script>
+				</c:if>
 			</li>
 		</ul>
 	</div>
