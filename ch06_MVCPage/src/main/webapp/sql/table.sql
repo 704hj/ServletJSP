@@ -46,3 +46,24 @@ create table zboard_fav(
  constraint zboard_fav_fk1 foreign key (board_num) references zboard (board_num),
  constraint zboard_fav_fk2 foreign key (mem_num) references zmember (mem_num)
  );
+ 
+ --댓글
+ create table zboard_reply(
+  re_num number not null,
+  re_content varchar2(900) not null,
+  re_date date default sysdate not null,
+  re_modifydate date,
+  re_ip varchar2(40) not null,
+  board_num number not null,
+  mem_num number not null,
+  constraint zboard_reply_pk primary key (re_num),
+  constraint zboard_reply_fk1 foreign key (board_num) references zboard (board_num),
+  constraint zboard_reply_fk2 foreign key (mem_num) references zmember (mem_num) 
+ );
+ create sequence zreply_seq;
+ 
+ 
+ 
+ 
+ 
+ 

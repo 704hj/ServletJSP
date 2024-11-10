@@ -30,14 +30,15 @@ public class GetFavAction implements Action {
             BoardFavVO boardFav= dao.selectFav(new BoardFavVO(board_num,user_num));
 
             if(boardFav!=null) {
-                mapAjax.put("statues", "yesFav");
+                mapAjax.put("status", "yesFav");
             }else {
                 mapAjax.put("status", "noFav");
             }
         }
-        //mapAjax.put("count",dao.selectFavCount(board_num));
+        //좋아요 개수
+        mapAjax.put("count",dao.selectFavCount(board_num));
 
-
+        //JSON 데이터로 변환
         return StringUtil.parseJSON(request, mapAjax);
     }
 

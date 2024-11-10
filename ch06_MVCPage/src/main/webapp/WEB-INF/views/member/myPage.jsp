@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -144,9 +145,50 @@
 			<h3>회원탈퇴 <input type="button" value="회원탈퇴" onclick="location.href='deleteUserForm.do'"></h3>
 		</div>
 		
-		<div class="mypage-div"></div>
+		<div class="mypage-div">
+		<h3>내가 좋아하는 게시물 목록</h3>
+		<table>
+			<tr>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>등록일</th>
+			</tr>
+			<c:forEach var="board" items="${boardList}">
+                <tr>
+                    <td><a href="${pageContext.request.contextPath}/board/detail.do?board_num=${board.board_num}" target="_blank">${fn:substring(board.title,0,26)}</a></td>
+                    <td><a>${board.id}</a></td>
+                    <td><a>${board.reg_date}</a></td>
+                </tr>
+            </c:forEach>
+		</table>
+		</div>
+		
 		<div class="mypage-end"></div>
+		
 	</div>
 </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
