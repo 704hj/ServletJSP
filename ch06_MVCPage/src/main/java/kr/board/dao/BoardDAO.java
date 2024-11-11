@@ -10,6 +10,7 @@ import kr.board.vo.BoardFavVO;
 import kr.board.vo.BoardReplyVO;
 import kr.board.vo.BoardVO;
 import kr.util.DBUtil;
+import kr.util.DurationFromNow;
 import kr.util.StringUtil;
 
 public class BoardDAO {
@@ -518,13 +519,144 @@ public class BoardDAO {
 	
 	
 	//댓글 개수
+    public int getReplyBoardCount(long board_num) throws Exception{
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String sql = null;
+        int count = 0;
+
+        try {
+            //커넥션풀로부터 커넥션 할당
+            conn = DBUtil.getConnection();
+            //SQL문 작성
+            sql = "SELECT COUNT(*) FROM zboard_reply WHERE board_num=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, board_num);
+            //SQL문 실행
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                count = rs.getInt(1);
+            }
+        }catch(Exception e) {
+            throw new Exception(e);
+        }finally {
+            DBUtil.executeClose(rs, pstmt, conn);
+        }
+
+        return count;
+    }
+
 	//댓글 목록
+    public List<BoardReplyVO> getListReplyBoard(int start, int end, long board_num)throws Exception{
+    	 
+    	 Connection conn = null;
+         PreparedStatement pstmt = null;
+         ResultSet rs = null;
+         List<BoardReplyVO> list = null;
+         String sql = null;
+         try {
+        	 //커넥션풀로부터 커넥션 할당
+             conn = DBUtil.getConnection();
+             //SQL문 작성
+             sql = "SELECT * FROM (SELECT a.*,rownum rnum FROM (SELECT * FROM zboard_reply JOIN zmember USING(mem_num) "
+             		+ "WHERE board_num=? ORDER BY re_num DESC)a) WHERE rnum>=? AND rnum<=?";
+             //PreparedStatement 객체 생성
+             pstmt = conn.prepareStatement(sql);
+             //?에 데이터 바인딩
+             pstmt.setLong(1, board_num);
+             pstmt.setInt(2, start);
+             pstmt.setInt(3, end);
+             //SQL문 실행
+             rs = pstmt.executeQuery();
+             list = new ArrayList<BoardReplyVO>();
+             while(rs.next()) {
+            	 BoardReplyVO reply = new BoardReplyVO();
+            	 reply.setRe_num(rs.getLong("re_num"));
+            	 reply.setRe_date(DurationFromNow.getTimeDiffLabel(rs.getString("re_date")));
+            	 if(rs.getString("re_modifydate")!=null) {
+            		 reply.setRe_modify(DurationFromNow.getTimeDiffLabel(rs.getString("re_modifydate")));
+            	 }
+            	 reply.setRe_content(StringUtil.useBrNoHtml(rs.getString("re_content")));
+            	 reply.setBoard_num(rs.getLong("board_num"));
+            	 reply.setMem_num(rs.getLong("mem_num"));
+            	 reply.setId(rs.getString("id"));
+            	 
+            	 list.add(reply);            	 
+             }
+             
+         }catch(Exception e) {
+        	 throw new Exception(e);
+         }finally {
+        	 DBUtil.executeClose(rs, pstmt, conn);
+         }
+    	
+    	
+    	return list;
+    }
 	//댓글 상세(댓글 수정,삭제시 작성자 회원번호 체크 용도로 사용)
+    public BoardReplyVO getReplyBoard(long re_num)throws Exception{
+    	
+    	Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        BoardReplyVO reply = null;
+        String sql = null;
+        try {
+        	//커넥션풀로부터 커넥션을 할당
+        	conn = DBUtil.getConnection();
+        	//SQL문 작성
+        	sql = "SELECT * FROM zboard_reply WHERE re_num = ?";
+        	//PreparedStatement 객체 생성
+        	pstmt = conn.prepareStatement(sql);
+        	//?에 데이터 바인딩
+        	pstmt.setLong(1, re_num);
+        	//SQL문 실행
+        	rs = pstmt.executeQuery();
+        	if(rs.next()) {
+        		reply = new BoardReplyVO();
+        		reply.setRe_num(rs.getLong("re_num"));
+        		reply.setMem_num(rs.getLong("mem_num"));
+        	}
+        }catch(Exception e) {
+        	throw new Exception(e);
+        }finally {
+        	DBUtil.executeClose(rs, pstmt, conn);
+        }
+    	
+    	
+    	return reply;
+    }
+    
 	//댓글 수정
 	//댓글 삭제
-	
-
+	public void deleteReplyBoard(long re_num)throws Exception{
+		Connection conn = null;
+        PreparedStatement pstmt = null;
+        String sql = null;
+        try {
+        	//커넥션풀로부터 커넥션을 할당
+        	conn = DBUtil.getConnection();
+        	//SQL문 작성
+        	sql = "DELETE FROM zboard_reply WHERE re_num=?";
+        	//PreparedStatement 객체 생성
+        	pstmt = conn.prepareStatement(sql);
+        	//?에 데이터 바인딩
+        	pstmt.setLong(1, re_num);
+        	//SQL문 실행
+        	pstmt.executeUpdate();
+        			
+        	
+        }catch(Exception e) {
+        	throw new Exception(e);
+        }finally {
+        	DBUtil.executeClose(null, pstmt, conn);
+        }
 	}
+
+	
+}
 
 
 
