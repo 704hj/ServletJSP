@@ -95,7 +95,7 @@
                 <input type="button" value="다음글 보기">
             </div>
             <div id="loading" style="display:none;">
-                <img src="${pageContext.request.contextPath}/images/loding.gif" width="50" height="50">
+                <img src="${pageContext.request.contextPath}/images/loading.gif" width="50" height="50">
             </div>
             <!-- 댓글 목록 출력 끝 -->
 		<!-- 댓글 끝 -->

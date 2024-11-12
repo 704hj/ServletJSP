@@ -128,6 +128,105 @@ $(function(){
 	    /*======================================
 		  댓글 등록 및 수정 공통(textarea에 내용 입력시 글자수 체크)
 		  ======================================*/
+		  //댓글 수정 버튼 클릭시 수정폼 노출->작업순서 3
+		  $(document).on('click','.modify-btn',function(){
+			//댓글 번호
+			let re_num = $(this).attr('data-renum');
+			//댓글 내용                   //p태그 내용 찾음       //g : 지정문자열 모두, i : 대소문자 무시
+			let content = $(this).parent().find('p').html().replace(/<br>/gi,'\n');
+			//댓글 수정폼 UI
+			let modifyUI ='<form id="mre_form">';          //수정폼이니까 id달라져야함
+			modifyUI += '<input type="hidden" name="re_num" id="mre_num" value="'+re_num+'">';
+			modifyUI += '<textarea rows="3" cols="50" name="re_content" id="mre_content" class="rep-content">'+content+'</textarea>';
+			modifyUI += '<div id="mre_first"><span class="letter-count">300/300</span></div>';
+			modifyUI += '<div id="mre_second" class="align-right">';
+			modifyUI += '<input type="submit" value="수정">';
+			modifyUI += ' <input type="button" value="취소" class="re-reset">';
+			modifyUI += '</div>';
+			modifyUI += '<hr size="1" noshade width="96%">';
+			modifyUI += '</form>';
+			
+			//이전에 이미 수정하는 댓글이 있을 경우 수정버튼을 클릭하면 
+			//숨김 sub-item 클래스로 지정한 div를 환원시키고 수정폼을 제거
+			initModifyForm();
+			
+			
+			//지금 클릭해서 수정하고자 하는 데이터는 감추기
+			//수정버튼을 감싸고 있는 div 감추는 작업
+			//직속부모를 찾음
+			$(this).parent().hide();
+			
+			//수정폼을 수정하고자 하는 데이터가 있는 div에 노출
+			//여러 부모들 중에서 .item을 찾아라
+			$(this).parents('.item').append(modifyUI);
+			
+			//입력한 글자수 셋팅
+			let inputLength = $('#mre_content').val().length;
+			let remain = 300 - inputLength;
+			remain += '/300';
+			//문서 객체에 반영
+			$('#mre_first .letter-count').text(remain);
+			
+		  });
+		  
+		  //댓글 수정폼 초기화->작업순서 1
+		  function initModifyForm(){
+			$('.sub-item').show();
+			$('#mre_form').remove();
+		  }
+		  
+		  //수정폼에서 취소 버튼 클릭시 수정폼 초기화->작업순서 2
+		  $(document).on('click','.re-reset',function(){
+			initModifyForm();
+		  });
+		  
+		  //댓글 수정
+		  $(document).on('submit','#mre_form',function(event){
+			if($('#mre_content').val().trim()==''){
+				alert('내용을 입력하세요!');
+				$('#mre_content').val('').focus();
+				return false;
+			}
+			//폼에 입력한 데이터 반환
+			let form_data = $(this).serialize();
+			//서버와 통신
+			$.ajax({
+				url:'updateReply.do',
+				type:'post',
+				data:form_data,
+				dataType:'json',
+				success:function(param){
+					if(param.result=='logout'){
+						alert('로그인해야 수정할 수 있습니다.');
+					}else if(param.result == 'success'){
+						$('#mre_form').parent().find('p').html($('#mre_content').val().replace(/c/g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'));
+						$('#mre_form').parent().find('.modify-date').text('최근 수정일 : 5초미만');
+						//수정폼 삭제 및 초기화
+						initModifyForm();
+					}else if(param.result == 'wrongAccess'){
+						alert('타인의 글을 수정할 수 없습니다.');
+					}else{
+						alert('댓글 수정 오류 발생');
+					}
+				},
+				error:function(){
+					alert('네트워크 오류 발생');
+				}
+				
+			});
+			//기본 이벤트 제거
+			event.preventDefault();
+			
+		  });
+		  
+		  
+		  
+		  
+		  
+		  /*======================================
+		   댓글 등록 및 수정 공통(textarea에 내용 입력시 글자수 체크)
+		   ======================================*/
+		  
 		  
 		  $(document).on('keyup','textarea',function(){
 	      let inputLength = $(this).val().length;

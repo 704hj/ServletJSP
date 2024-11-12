@@ -161,8 +161,18 @@
                 </tr>
             </c:forEach>
 		</table>
-		</div>
 		
+		<c:if test="${user_auth!=9}">
+		<input type="button" value="관리자와 채팅(${chatCount})"
+		 onclick="location.href='${pageContext.request.contextPath}/chatone/chatDetail.do'">
+		</c:if>
+		
+		<c:if test="${user_auth==9}">
+		<input type="button" value="채팅목록(${chatCount})"
+		 onclick="location.href='${pageContext.request.contextPath}/chatone/adminChatList.do'">
+		</c:if>
+		
+		</div>
 		<div class="mypage-end"></div>
 		
 	</div>

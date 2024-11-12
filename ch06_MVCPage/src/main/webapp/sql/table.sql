@@ -62,7 +62,19 @@ create table zboard_fav(
  );
  create sequence zreply_seq;
  
- 
+ --1대1 채팅
+create table zchatone(
+ chat_num number not null,
+ send_num number not null, --보내는 사람
+ recv_num number not null, --받는 사람
+ message varchar2(4000) not null,
+ read_check number(1) default 1 not null, --읽기 여부 -> 1:읽지 않음, 0:읽음
+ chat_date date default sysdate not null,
+ constraint zchatone_pk primary key (chat_num),
+ constraint zchatone_fk1 foreign key (send_num) references zmember (mem_num),
+ constraint zchatone_fk2 foreign key (recv_num) references zmember (mem_num)
+ );
+create sequence zchatone_seq;
  
  
  
