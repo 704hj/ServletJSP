@@ -33,8 +33,8 @@ public class ChatOneVO {
 	public String getMessage() {
 		return message;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setMessage(String string) {
+		this.message = string;
 	}
 	public int getRead_check() {
 		return read_check;
