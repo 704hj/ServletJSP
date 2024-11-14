@@ -1,7 +1,7 @@
 package kr.chatone.vo;
 
 public class ChatOneVO {
-	private long char_num; //채팅번호
+	private long chat_num; //채팅번호
 	private long send_num; //보낸 사람 회원번호
 	private long recv_num; //받는 사람 회원번호
 	private String message; //메시지
@@ -12,11 +12,11 @@ public class ChatOneVO {
 	private int cnt;
 	
 	
-	public long getChar_num() {
-		return char_num;
+	public long getChat_num() {
+		return chat_num;
 	}
-	public void setChar_num(long char_num) {
-		this.char_num = char_num;
+	public void setChat_num(long chat_num) {
+		this.chat_num = chat_num;
 	}
 	public long getSend_num() {
 		return send_num;

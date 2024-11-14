@@ -11,6 +11,28 @@
 <script type="text/javascript">
 	$(function(){
 		//웹소켓 생성
+		const message_socket = new WebSocket("ws://localhost:8080/ch06_MVCPage/webSocket");
+		message_socket.onopen = function(evt){
+			message_socket.send('one:');
+		};
+		//서버로부터 메시지를 받으면 호출되는 함수 지정
+		message_socket.onmessage = function(evt){
+			//메시지 알림
+			let data = evt.data;
+			if(data.substring(0,4) == 'one:'){
+				selectData();
+				
+			}
+		};
+		message_socket.onclose = function(evt){
+			//소켓이 종료된 후 부과적인 작업이 있을 경우 명시
+			//예시)
+			//console.log('chat close');
+			//alert('채팅이 종료되었습니다.')
+		};
+		
+		
+		
 		
 		//엔터키 처리 이벤트 연결
 		$('#message').keydown(function(event){
@@ -31,6 +53,7 @@
 				success:function(param){
 					if(param.result == 'logout'){
 						alert('로그인 후 사용하세요!')
+						message_socket.close();
 					}else if(param.result == 'success'){
 						$('#chatting_message').empty();
 						
@@ -68,16 +91,16 @@
 						
 					}else{
 						alert('채팅 읽기 오류 발생');
+						message_socket.close();
 					}
 				},
 				error:function(){
-					alert('네트워크 오류 발생');					
+					alert('네트워크 오류 발생');	
+					message_socket.close();
 				}
-			
-			
-			})
-			
+			});
 		}
+
 		//채팅 등록
 		$('#chatting_form').submit(function(event){
 			if($('#message').val().trim()==''){
@@ -95,18 +118,19 @@
 				dataType:'json',
 				success:function(param){
 					if(param.result == 'logout'){
-						
+						alert('로그인해야 작성할 수 있습니다.');
+						message_socket.close();
 					}else if(param.result == 'success'){
 						//폼 초기화
 						$('#message').val('').focus();
-						selectData();
+						message_socket.send('one:');
 					}else{
 						alert('채팅 등록 오류 발생');
 					}
-					
 				},
 				error:function(){
 					alert('네트워크 오류 발생');
+					message_socket.close();
 				}
 				
 			});

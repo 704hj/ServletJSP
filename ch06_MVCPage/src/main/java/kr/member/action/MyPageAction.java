@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.board.dao.BoardDAO;
 import kr.board.vo.BoardVO;
+import kr.chatone.dao.ChatOneDAO;
 import kr.controller.Action;
 import kr.member.dao.MemberDAO;
 import kr.member.vo.MemberVO;
@@ -29,9 +30,15 @@ public class MyPageAction implements Action{
 		//내가 좋아하는 게시물 정보
 		BoardDAO BoardDao = BoardDAO.getInstance();
 		List<BoardVO> boardList = BoardDao.getListBoardFav(1,5,user_num);
+		
+		//1대1 채팅
+		ChatOneDAO chatDAO = ChatOneDAO.getInstance();
+		int chatCount = chatDAO.getUnreadCount(user_num);
+		
 			
 		request.setAttribute("member", member);
 		request.setAttribute("boardList", boardList);
+		request.setAttribute("chatCount", chatCount);
 		
 		//JSP 경로 반환
 		return "member/myPage.jsp";

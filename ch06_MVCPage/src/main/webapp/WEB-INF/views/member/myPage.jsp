@@ -169,7 +169,7 @@
 		
 		<c:if test="${user_auth==9}">
 		<input type="button" value="채팅목록(${chatCount})"
-		 onclick="location.href='${pageContext.request.contextPath}/chatone/adminChatList.do'">
+		 onclick="location.href='${pageContext.request.contextPath}/chatone/chatList.do'">
 		</c:if>
 		
 		</div>
