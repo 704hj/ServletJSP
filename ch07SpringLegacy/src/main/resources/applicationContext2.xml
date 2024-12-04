@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	 <!-- 객체 생성을 위한 설정(Spring Container에 생성된 객체 보관)-->
+	 <!-- name : 빈(bean) 객체를 식별할 때 사용할 빈 이름 class : 빈 객체를 생성할 때 사용할 클래스	-->
+	 <!-- registerDAO에 의존하는 방식, registerDAO가 없으면 null값 반환 -->
+	 <bean name="registerService" class="kr.spring.ch07.RegisterService">
+	 
+	 		<!--  name : 의존 객체를 주입할 때 사용할 설정 메서드 (setter)의 프로퍼티 이름  -->
+	 	<property name="registerDAO">
+	 		<ref bean="registerDAO"/><!--아래 bean name="registerDAO" -->
+	 	</property>
+	 </bean>
+	 <!-- 단독호출 가능 -->
+	 <bean name="registerDAO" class="kr.spring.ch07.RegisterDAO"/>
+	 
+	 
+	 <!--  DI 프로퍼티 설정방식 : 여러 개의 프로퍼티 사용하는 경우 -->
+	 <!-- id : 빈(bean) 객체를 식별할 때 사용할 빈 이름 class : 빈 객체를 생성할 때 사용할 클래스	-->
+	 <bean id="work" class="kr.spring.ch08.WorkController">
+	 		<!--  name : 의존 객체를 주입할 때 사용할 설정 메서드 (setter)의 프로퍼티 이름  -->
+	 	<property name="periodTime">
+	 		<value>10</value>
+	 	</property>
+	 	
+	 		<!--  name : 의존 객체를 주입할 때 사용할 설정 메서드 (setter)의 프로퍼티 이름  -->
+	 	<property name="email">
+	 	   <!--  bean id="email"과 같은 이름 명시  -->	
+	 		<ref bean="email"/>
+	 	</property>
+	 </bean>
+	 <bean id="email" class="kr.spring.ch08.EmailSender"/>
+	 
+	 
+	 <!-- XML 네임스페이스를 이용한 프로퍼티 설정 -->
+	 <!-- p:image-ref="image" = bean id="image"	-->
+	 <bean id="upload" class="kr.spring.ch09.UploadController"
+	 		p:timeout="50" p:image-ref="image"/>
+	 	
+	 <bean id="image" class="kr.spring.ch09.ImageSender"/>
+	 
+	 
+	 
+	 <!-- 컬렉션 타입의 프로퍼티 설정 -->
+	 <!-- List 타입 프로퍼티 설정 -->
+	 <bean name="performanceMonitor" class="kr.spring.ch10.PerformanceMonitor">
+	 	<property name="deviations">
+	 		<list value-type="java.lang.Double"><!-- 제네릭 표현 : 값에 숫자만 받겠다 -->
+	 			<value>0.2</value>
+	 			<value>0.3</value>
+	 		</list>
+	 	</property>
+	 </bean>
+	 
+	 
+	 <!-- Map 타입 프로퍼티 설정 -->
+	 <bean name="ProtocolHandlerFactory" class="kr.spring.ch11.ProtocolHandlerFactory">
+	 	<!-- setMap 메서드를 찾아서 객체에 전달 -->
+	 	<property name="map">
+	 		<map key-type="java.lang.String" value-type="java.lang.Object">
+	 			<entry> <!-- key태그 안에 문자를 쓸 때는 <value>로 감싸줘야함  setMap(Map<String, Object> map)  여기서 String을 입력함-->
+	 				<key><value>soap</value></key>
+	 				<ref bean="soapHandler"/><!-- 객체생성 -->
+	 			</entry>
+	 			
+	 			<entry>
+	 				<key><value>rest</value></key>
+	 				<ref bean="restHandler"/>
+	 			</entry>
+	 		</map>
+	 	</property>
+	 </bean>
+	 <bean name="soapHandler" class="kr.spring.ch11.SoapHandler"/>
+	 <bean name="restHandler" class="kr.spring.ch11.RestHandler"/>
+	 
+	 
+	 <!-- Set 타입 프로퍼티 설정 -->
+	 <bean name="videoClient" class="kr.spring.ch12.VideoClient">
+         <property name="subSet">
+             <set>
+                 <value>10</value>
+                 <value>20</value>
+             </set>
+         </property>
+     </bean>
+     
+     
+      <!-- Properties 타입 프로퍼티 설정 -->
+      <bean name="bookClient" class="kr.spring.ch13.BookClient">
+      	<!-- private Properties prop;라고 명시했기 때문에 name="prop"-->
+      	<property name="prop">
+      		<props><!-- 숫자 아니고 문자열임 -->
+      			<prop key="server">192.168.0.1</prop>
+      			<prop key="connectionTimeout">5000</prop>
+      		</props>
+      	</property>
+      
+      </bean>
+	 
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	<!-- 객체 생성을 위한 설정(Spring Container에 생성된 객체 보관)-->
+	<!-- 
+	name : 빈(bean) 객체를 식별할 때 사용할 이름
+	class : 빈 객체를 생성할 때 사용할 클래스	
+	 -->
+	 <bean name="messageBean" class="kr.spring.ch01.MessageBean"/>
+	 <bean name="studentBean" class="kr.spring.ch02.StudentBean"/>
+	 <bean name="operatorBean" class="kr.spring.ch03.OperatorBean"/>
+	 
+	 <!-- (DI)의존관계 주입 : 생성자 방식 -->
+	 <bean name="writeArticleService" class="kr.spring.ch04.WriteArticleService">
+	 <!-- 생성자의 인자에 의존객체 전달 -->
+	 <constructor-arg>
+	 	<!-- ref 태그 : 빈 객체 참조
+	  		 baen 속성 : 빈 객체를 전달할 수 있도록 빈 객체의 식별자(name) 명시
+	  	-->
+	  	<ref bean="wrtieArticleDAO"/>
+	 </constructor-arg>
+	 </bean>
+	 <bean name="wrtieArticleDAO" class="kr.spring.ch04.WriteArticleDAO"/>
+	 
+	 <!-- (DI)의존관계 주입 : 생성자 방식 -->
+	 <bean name="memberService" class="kr.spring.ch05.MemberService">
+	 <!-- 생성자의 인자에 의존객체 전달 -->
+	 <constructor-arg>
+	 	<ref bean="memberDAO"/>
+	 </constructor-arg>
+	 </bean>
+	 <bean name="memberDAO" class="kr.spring.ch05.MemberDAO"/>	 
+	 
+	
+	 <!-- DI 생성자 설정방식 - 여러개의 인자 사용. bean의 이름을 지정한 식별자이고 name과 id둘 다 똑같다. id가 더 많이 쓰인다.-->
+	 <bean id="monitor" class="kr.spring.ch06.SystemMonitor">
+	 	<!-- 주의! 인자의 순서대로 기재 -->
+	 	<!-- 1번 방법
+	 	<constructor-arg>
+	 		<value type="long">10</value>
+	 	</constructor-arg>
+	 	<constructor-arg>
+	 		<ref bean="smsSender"/>
+	 	</constructor-arg>
+	 	 -->
+	 	 
+	 	 <!-- 2번 방법
+	 	 속성으로 값 또는 객체 설정 -->
+	 	 <!-- 
+	 	 <constructor-arg value="20"/>
+	 	 <constructor-arg ref="smsSender"/> 
+	 	 -->
+	 	 
+	 	 <!-- 3번 방법
+	 	 순서를 무시할 때 index 표시 (순서란 생성자의 인자명 순서 public SystemMonitor(long periodTime, SmsSender sender)  -->
+	 	 <!-- 
+	 	 <constructor-arg index="1" ref="smsSender"/>
+	 	 <constructor-arg index="0" value="40"/>
+	 	 -->
+	 	 
+	 	 <!-- 4번 방법 
+	 	 생성자의 인자명 기재 public SystemMonitor(long periodTime, SmsSender sender)
+	 	 -->
+	 	 <constructor-arg name="periodTime" value="50"/>
+	 	 <constructor-arg name="sender" ref="smsSender"/>
+	 	 
+	 	 
+	 </bean>
+	 <bean id="smsSender" class="kr.spring.ch06.SmsSender"/>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
