@@ -10,7 +10,7 @@
 <script>
     $(function(){
     	//회원탈퇴 유효성 체크
-        $('#write_form').submit(function(){
+        $('#write_form').submit(function(){           //class 이름
             const items = document.querySelectorAll('.input-check');
             for(let i = 0; i < items.length; i++){
                 if(items[i].value.trim() == ''){
