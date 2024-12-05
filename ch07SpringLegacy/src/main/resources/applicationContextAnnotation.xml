@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- @Autowired, @Resource, @Qualifier 사용시 아래 설정 추가 -->
+	<context:annotation-config/>
+	
+	<!-- @Autowired 어노테이션을 이용한 의존관계 자동 설정 -->
+	<bean id="monitor" class="kr.spring.ch16.SystemMonitor">
+		<!-- Java의 기본 타입(숫자, 문자열 등)**을 객체의 속성에 주입 :  <value> 태그를 사용해야 합니다. 이유는, 
+			Spring이 설정 파일을 읽을 때, 숫자 값은 특별한 형태로 처리하지 않고 일반 문자열처럼 간주하기 때문 -->
+		<property name="periodTime">
+			<value>10</value>
+		</property>
+	</bean>
+	<!-- 자동 설정하려고 함 -> setSender(SmsSender sender)여기에 @Autowired 이거 작성함-->
+	<bean id="sender"  class="kr.spring.ch16.SmsSender"/>
+
+	<!-- @Qualifier 어노테이션을 이용한 자동 설정 제한-->
+	<bean id="systemMonitor" class="kr.spring.ch17.SystemMonitor2"/>
+	<bean id="recorder1" class="kr.spring.ch17.Recorder" >
+		<qualifier value="main"/>
+	</bean>
+	<!-- @Autowired : 타입을 체크함 -> 동일 타입 둘 이상 존재하면 오류 나는 현상 -->
+	<bean id="recorder2" class="kr.spring.ch17.Recorder"/>
+	
+	<!-- @Resource는 빈객체의 이름과 프로퍼티명이 일치하면 의존관계 주입 -->
+	<bean id="homeController" class="kr.spring.ch18.HomeController"/>
+	<bean id="camera1" class="kr.spring.ch18.Camera" p:number="1"/> <!-- 코드 단순화위해서 p태그를 사용하여 넘버 부여 -->
+	<bean id="cameraz" class="kr.spring.ch18.Camera" p:number="2"/>
+	<bean id="camera3" class="kr.spring.ch18.Camera" p:number="3"/>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
