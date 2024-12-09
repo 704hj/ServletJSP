@@ -8,6 +8,10 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
+
+	<!-- 환경설정 하는 xml -->
+	
+	
 	<!-- 어노테이션을 이용한 유효성 체크 설정 -->
 	<annotation-driven/>
 	
@@ -46,7 +50,41 @@
     
     <!-- 유효성 체크 -->
     <beans:bean class="kr.spring.mvc06.controller.CreateAccountController"/>
+
+    <!-- 리소스 번들 지정 -->
+    <beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+    	<beans:property name="basenames">
+    		<beans:list>     <!-- 폴더.파일명 -->
+    			<beans:value>messages.validation</beans:value>
+    		</beans:list>
+    	</beans:property>
+    </beans:bean>
     
+    
+    <!-- login -->
+    <beans:bean class="kr.spring.mvc07.controller.LoginController"/>
+    <beans:bean class="kr.spring.mvc07.service.LoginService"></beans:bean>
+    
+    <!-- 파일 업로드를 위한 multipartResolver 설정 -->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<beans:property name="maxUploadSize" value="52428800"/><!-- 최대 업로드 사이즈 50M -->
+    	<beans:property name="defaultEncoding" value="UTF-8"/>
+    </beans:bean>
+    
+    <!-- 파일 업로드 절대 경로 설정 파일 등록 		src를 가르킨다	-->
+    <context:property-placeholder location="classpath:config/file.properties"/>
+    
+    <!-- 파일 업로드 처리 -->
+    <beans:bean class="kr.spring.mvc08.controller.SubmitReportController"></beans:bean>
+    
+    <!-- 파일 다운로드 처리 					   우리가 지정한 DownloadController 네임과 Bean 네임이 같으면 해당객체를 호출하겠다-->
+    <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
+	<beans:bean class="kr.spring.mvc09.controller.DownloadController"/>
+	
+	<!-- DownloadController클래스에서 return new ModelAndView("download","downloadFile",downloadFile); id값 ownload 일치-->
+	<beans:bean id="download" class="kr.spring.mvc09.view.DownloadView"/>
+	
+	 
 </beans:beans>
 
 
