@@ -81,7 +81,7 @@
     <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0"/>
 	<beans:bean class="kr.spring.mvc09.controller.DownloadController"/>
 	
-	<!-- DownloadController클래스에서 return new ModelAndView("download","downloadFile",downloadFile); id값 ownload 일치-->
+	<!-- DownloadController클래스에서 return new ModelAndView("download","downloadFile",downloadFile); id값 download 일치-->
 	<beans:bean id="download" class="kr.spring.mvc09.view.DownloadView"/>
 	
 	 
