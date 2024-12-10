@@ -84,6 +84,10 @@
 	<!-- DownloadController클래스에서 return new ModelAndView("download","downloadFile",downloadFile); id값 download 일치-->
 	<beans:bean id="download" class="kr.spring.mvc09.view.DownloadView"/>
 	
+	<!-- 엑셀 다운로드 id="pageRanks" pageRanks와 같은 이름 호출-->
+	<beans:bean class="kr.spring.mvc10.controller.PageRanksController"/>
+	<beans:bean id="pageRanks" class="kr.spring.mvc10.view.PageRanksView"/>
+	
 	 
 </beans:beans>
 

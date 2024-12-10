@@ -17,5 +17,8 @@
 <a href="${pageContext.request.contextPath}/account/create.do">CreateAccountController</a><br> 
 <a href="${pageContext.request.contextPath}/login/login.do">LoginController</a><br> 
 <a href="${pageContext.request.contextPath}/report/submitReport.do">SubmitReportController</a><br> 
+<a href="${pageContext.request.contextPath}/file.do">DownloadController</a><br> 
+<a href="${pageContext.request.contextPath}/pageRanksExcel.do">PageRanksController (엑셀 다운로드)</a><br> 
+<a href="${pageContext.request.contextPath}/pageJsonReport.do">PageRanksController (JSON 데이터 처리)</a><br> 
 </body>
 </html>
