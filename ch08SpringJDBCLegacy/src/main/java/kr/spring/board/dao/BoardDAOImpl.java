@@ -18,6 +18,9 @@ public class BoardDAOImpl implements BoardDAO{
 	private static final String SELECT_COUNT_SQL = "SELECT COUNT(*) FROM aboard";
 	private static final String SELECT_LIST_SQL = "SELECT * FROM (SELECT a.*, rownum rnum FROM(SELECT * FROM aboard ORDER by reg_date DESC)a) WHERE rnum >= ? AND rnum <= ?";
 	private static final String SELECT_DETAIL_SQL = "SELECT * FROM aboard WHERE num=?";
+	private static final String UPDATE_SQL = "UPDATE aboard SET writer=?,title=?,content=? WHERE num=?";
+	private static final String DELETE_SQL = "DELETE FROM aboard WHERE num=?";
+	
 	
 	//하나의 레코드의 데이터를 자바빈에 매핑
 	private RowMapper<BoardVO> rowMapper = new RowMapper<BoardVO>() {
@@ -33,9 +36,6 @@ public class BoardDAOImpl implements BoardDAO{
 		}
 	};
 	
-	
-	
-	
 	@Autowired //jdbcTemplate가 가지고 있는 메서드를 가지고 데이터 연동하려고 함. 데이터 호출
 	private JdbcTemplate jdbcTemplate;
 	
@@ -45,7 +45,7 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public int getBoardCount() {
+	public int getBoardCount() {							//int형은 null값 허용 불가인데 형변환해서 Integer일 때는 null값 허용
 		return jdbcTemplate.queryForObject(SELECT_COUNT_SQL, Integer.class);
 	}
 
@@ -56,19 +56,18 @@ public class BoardDAOImpl implements BoardDAO{
 	}
 
 	@Override
-	public BoardVO getBoard(int num) {
+	public BoardVO getBoard(int num) {									//?에 PK전달
 		return jdbcTemplate.queryForObject(SELECT_DETAIL_SQL, new Object[] {num},rowMapper);
 	}
 
 	@Override
 	public void updateBoard(BoardVO board) {
-		// TODO Auto-generated method stub
-		
+		jdbcTemplate.update(UPDATE_SQL, new Object[] {board.getWriter(),board.getTitle(),board.getContent(),board.getNum()});
 	}
 
 	@Override
 	public void deleteBoard(int num) {
-		// TODO Auto-generated method stub
+		jdbcTemplate.update(DELETE_SQL, new Object[] {num});
 		
 	}
 

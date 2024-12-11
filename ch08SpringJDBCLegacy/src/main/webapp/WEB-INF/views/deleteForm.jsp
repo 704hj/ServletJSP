@@ -5,37 +5,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글쓰기</title>
+<title>글삭제</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" type="text/css">
 </head>
 <body>
 <div class="page-main">
-	<h2>글쓰기</h2>
-	<form:form action="insert.do" modelAttribute="boardVO">
+	<h2>글삭제</h2>					<!-- boardVO : BoardController-public String formDelete(BoardVO vo) 에서 BoardVO의 앞 글자 소문자로 변경해서 작성-->
+	<form:form action="delete.do" modelAttribute="boardVO">
+		<form:hidden path="num"/>
 		<ul>
-			<li>
-				<form:label path="writer">작성자</form:label>
-				<form:input path="writer"/>
-				<form:errors path="writer" cssClass="error-color"/>
-			</li>
-			<li>
-				<form:label path="title">제목</form:label>
-				<form:input path="title"/>
-				<form:errors path="title" cssClass="error-color"/>
-			</li>
 			<li>
 				<form:label path="passwd">비밀번호</form:label>
 				<form:password path="passwd"/>
 				<form:errors path="passwd" cssClass="error-color"/>
 			</li>
-			<li>
-				<form:label path="content">내용</form:label>
-				<form:textarea path="content"/>
-				<form:errors path="content" cssClass="error-color"/>
-			</li>
 		</ul>
 		<div class="align-center">
-			<form:button>등록</form:button>
+			<form:button>삭제</form:button>
 			<input type="button" value="목록" onclick="location.href='list.do'">
 		</div>
 	</form:form>

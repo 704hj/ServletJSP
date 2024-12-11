@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -52,7 +53,7 @@ public class BoardController {
 	}
 	
 	//전송된 데이터 처리
-	@PostMapping("/insert.do")
+	@PostMapping("/insert.do") //자바빈 객체 담고, BindingResult까지 연속적으로 담아줘야함
 	public String submit(@Valid BoardVO vo, BindingResult result) {
 		log.debug("<<전송된 데이터 : BoardVO>> : " + vo);
 		
@@ -90,5 +91,109 @@ public class BoardController {
 		
 		return mav;
 	}
+	
+	//상세
+	@GetMapping("/detail.do")// null값이 넘어와도 되면 Integer|꼭 전달해야하는 상황 int
+	public ModelAndView detail(int num) {
+		log.debug("<<num>> : " + num);
+		
+		BoardVO board = boardService.getBoard(num);
+								//뷰이름 			속성명   속성값 -> view에서 ${board.num} 일케 가져와야함
+		return new ModelAndView("selectDetail","board",board);
+	}
+	
+	//수정 폼
+	@GetMapping("/update.do")		//모델 객체를 인자로 받는다
+	public String formUpdate(int num, Model model){
+		log.debug("<<num>> : " + num);
+		//모델 객체에 데이터 추가	/ 속성명	, 속성값
+		model.addAttribute("boardVO", boardService.getBoard(num));
+		
+		
+		return "updateForm";
+	}
+	
+	//전송된 데이터 수정
+    @PostMapping("/update.do")
+    public String submitUpdate(@Valid BoardVO vo, BindingResult result) {
+        log.debug("<<글수정 : BoardVO>> : " + vo);
+        //전송된 데이터 유효성 체크 결과 오류가 있으면 폼을 호출
+        if(result.hasErrors()) {
+            return "updateForm";
+        }
+        //DB에 저장된 비밀번호 구하기
+        BoardVO db_board = boardService.getBoard(vo.getNum());
+        //비밀번호 일치 여부 체크
+        if(!db_board.getPasswd().equals(vo.getPasswd())) {
+                                //필드,     오류코드
+            result.rejectValue("passwd", "invalidPassword");
+            return "updateForm";
+        }
+        //글수정
+        boardService.updateBoard(vo);
+        
+        return "redirect:/detail.do?num="+vo.getNum();
+    }
+
+    //삭제
+    @GetMapping("/delete.do")
+    public String formDelete(BoardVO vo) {
+    	 return "deleteForm";
+    	
+    }
+    
+    //글삭제 처리
+    @PostMapping("/delete.do")
+    public String submitDelete(@Valid BoardVO vo, BindingResult result) {
+    	log.debug("<<글삭제 : BoardVO>> : " + vo);
+    
+    	//비밀번호만 유효성 체크 결과 확인
+    	if(result.hasFieldErrors("passwd")) {
+    		return "deleteForm";
+    	}
+    	//DB에 저장된 비밀번호 구하기
+    	BoardVO db_board = boardService.getBoard(vo.getNum());
+    	
+    	//비밀번호 일치 여부 체크
+    	if(!db_board.getPasswd().equals(vo.getPasswd())) {
+    		result.rejectValue("passwd", "invalidPassword");
+    		return "deleteForm";
+    	}
+    	
+    	boardService.deleteBoard(vo.getNum());
+    	
+    	return "redirect:/list.do";
+    }
+    
+
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
