@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions><!-- name="main"으로 호출하면 layout가 작동하면서 자동으로 웹상에서 하나로 보여지게 합쳐줌  -->
+    <!-- 부모 Definition 정의 -->
+    <definition name="main" template="/WEB-INF/views/template/layout.jsp">
+    <!--put-attribute : 템플릿의 특정 영역(헤더, 메뉴, 본문, 푸터 등)에 포함될 JSP 파일을 지정.  -->
+		<put-attribute name="title" value="Spring Tiles Example"/>  
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>  	
+		<put-attribute name="menu" value="/WEB-INF/views/template/menu.jsp"/>  	
+		<put-attribute name="body" value="/WEB-INF/views/main_view.jsp"/> 
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/> 
+    </definition>
+    
+    <!-- 자식 Definition 정의 -->
+    <definition name="company" extends="main">
+   		<put-attribute name="title" value="회사소개"/>
+		<put-attribute name="body" value="/WEB-INF/views/company_view.jsp"/> 
+    </definition>
+    
+    <definition name="product" extends="main">
+   		<put-attribute name="title" value="제품소개"/>
+		<put-attribute name="body" value="/WEB-INF/views/product_view.jsp"/>
+    </definition>
+</tiles-definitions>
