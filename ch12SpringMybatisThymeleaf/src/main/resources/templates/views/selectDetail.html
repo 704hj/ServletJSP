@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!--/* 명시해줌으로써 타임리프 기능 갖게됨 */-->
+<head>
+<meta charset="UTF-8">
+<title>글상세</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+<div class="page-main-style">
+	<h2 th:text="${board.title}"></h2>
+	<p>
+		<!--/* [[]] 로 정보 처리*/-->
+		<span>글번호 : [[${board.num}]]</span>
+		<span>작성자 : [[${board.writer}]]</span>
+		<span>작성일 : [[${board.reg_date}]]</span>
+	</p>
+	<hr width="100%" size="1" noshade="noshade">
+	<p th:text="${board.content}"></p>
+	<div class="align-center">
+		<input type="button" value="수정" th:onclick="|location.href='@{update.do(num=${board.num})}'|"><!--/* 값을 넘기는 링크를 명시할 때는 th:onclick="|location.href='@{update.do(num=${board.num})}'|" */-->
+		<input type="button" value="목록" onclick="location.href='list.do'"><!--/* 값을 넘기지 않고 링크를 명시할 때는 기존 문법 가능 */-->
+		<input type="button" value="삭제" th:onclick="|location.href='@{delete.do(num=${board.num})}'|">
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!-- 명시해줌으로써 타임리프 기능 갖게됨 -->
+<head>
+<meta charset="UTF-8">
+<title>게시판 목록</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+<div class="page-main-style">
+	<h2>게시판 목록</h2>
+	<div class="align-right">
+		<input type="button" value="글쓰기" onclick="location.href='insert.do'">
+	</div>
+	<!-- jstl 사용 불가 왜? -->
+	<div class="align-center" th:if="${count == 0}">
+		출력할 내용이 없습니다.	
+	</div>
+	<div th:unless="${count == 0}">
+		<table>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+			</tr>
+			<!-- 일반 text : html 불허 -->
+			<!-- 루프 	 변수, 생략가능(상태변수): 컬렉션, controller에서 저장한 데이터 호출-->
+			<tr th:each="board, userStat : ${list}" >
+				<td th:text="${board.num}"></td><!-- th:each="board, 여기서 가져온 board -->
+				<td><a th:href="@{/detail.do(num=${board.num})}" th:text="${board.title}"></a></td>
+				<td th:text="${board.writer}"></td>
+				<td th:text="${board.reg_date}"></td>
+			</tr>
+		</table>		
+		<!-- 상태변수 정리
+		index : 0부터 시작			th:text="${userStat.index}"
+		count : 1부터 시작			th:text="${userStat.count}"
+		size  : 전체 사이즈		th:text="${userStat.size}"
+		even  : 짝수 여부(boolean) th:text="${userStat.even}"
+		odd	  : 홀수 여부(boolean) th:text="${userStat.odd}"
+		first : 처음 여부(boolean) th:text="${userStat.first}"
+		last  : 끝 여부(boolean)  th:text="${userStat.last}"
+		current : 현재 객체		th:text="${userStat.current}"
+		
+		
+		-->
+				
+								<!-- utext : html허용 -->
+		<div class="align-center" th:utext="${pagingHtml}"></div>
+	</div>
+</div>
+</body>
+</html>

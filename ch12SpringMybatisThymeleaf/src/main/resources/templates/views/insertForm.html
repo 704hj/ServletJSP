@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!--/* 명시해줌으로써 타임리프 기능 갖게됨 */-->
+<head>
+<meta charset="UTF-8">
+<title>글쓰기</title>
+<link rel="stylesheet" th:href="@{/css/style.css}" type="text/css">
+</head>
+<body>
+<div class="page-main-style">
+	<h2>글쓰기</h2>
+	<form action="insert.do" method="post">
+		<ul>
+			<li>
+				<label for="writer">작성자</label>
+				<input type="text" name="writer" id="writer" th:field="${boardVO.writer}">
+				<!--/* BindingResult에 접근해야함/ #fields:Thymeleaf의 내장 객체,폼 데이터(필드와 관련된 정보를 제공 )와 유효성 검증 상태를 처리 *:pring의 데이터 바인딩 컨텍스트에서 값을 가져옴*/-->	
+				<span th:if="${#fields.hasErrors('boardVO.writer')}" th:errors="*{boardVO.writer}" class="error-color"></span>		
+			</li>
+			<li>
+				<label for="title">제목</label>
+				<input type="text" name="title" id="title" th:field="${boardVO.title}">
+				<span th:if="${#fields.hasErrors('boardVO.title')}" th:errors="*{boardVO.title}" class="error-color"></span>	
+			</li>
+			<li>
+				<label for="passwd">비밀번호</label>
+				<input type="password" name="passwd" id="passwd">
+				<span th:if="${#fields.hasErrors('boardVO.passwd')}" th:errors="*{boardVO.passwd}" class="error-color"></span>	
+			</li>
+			<li>
+				<label for="content">내용</label>
+				<textarea rows="5" cols="30" name="content" id="content" th:field="${boardVO.content}"></textarea>
+				<span th:if="${#fields.hasErrors('boardVO.content')}" th:errors="*{boardVO.content}" class="error-color"></span>	
+			</li>
+		</ul>
+		<div class="align-center">
+			<input type="submit" value="등록">
+			<input type="button" value="홈으로" onclick="location.href='list.do'">
+		</div>
+	</form>
+</div>
+</body>
+</html>
