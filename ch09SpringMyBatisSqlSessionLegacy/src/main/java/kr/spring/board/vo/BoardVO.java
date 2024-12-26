@@ -1,0 +1,65 @@
+package kr.spring.board.vo;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
+public class BoardVO {
+	private int num;
+	@NotBlank
+	private String writer;
+	@NotBlank
+	private String title;
+	@NotBlank
+	private String passwd;
+	@NotEmpty
+	private String content;
+	private String reg_date;
+	
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public String getWriter() {
+		return writer;
+	}
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getPasswd() {
+		return passwd;
+	}
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "BoardVO [num=" + num + ", writer=" + writer + ", title=" + title + ", passwd=" + passwd + ", content="
+				+ content + ", reg_date=" + reg_date + "]";
+	}
+	
+	
+	
+}

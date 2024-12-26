@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="kr.spring.board.dao.BoardMapper">  
+	<!-- 글쓰기 : id로 맵핑한다-->
+	  <insert id="insertBoard" parameterType="boardVO">
+        INSERT INTO aboard(
+            num,
+            writer,
+            title,
+            passwd,
+            content,
+            reg_date)
+        VALUES (
+            aboard_seq.nextval, <!-- 시퀀스를 사용해 고유한 번호를 자동 생성. 마이바티스가 #{writer}를 SQL의 `?`로 변환하고, 해당 값을 매핑된 자바빈 프로퍼티 입력 -->
+            #{writer},
+            #{title},
+            #{passwd},
+            #{content},
+            SYSDATE)			<!-- 날짜도 데이터베이스에서 생성됨 -->
+    </insert>
+    
+    <!-- 총 레코드 수  -->				<!-- 반환할 데이터가 정수일 경우 Integer의 알리아스인 integer -->
+    <select id="selectBoardCount" resultType="integer">
+		SELECT COUNT(*) FROM aboard
+	</select>
+	
+	<!-- 목록 -->									<!-- resultType="boardVO" -> 한건의 레코드가 들어가는 자바빈으로 반환해줘야함 -->  
+	<select id="selectBoardList" parameterType="map" resultType="boardVO">					<!-- XML 문법: 닫는 꺽쇠(`>`)를 문법 오류로 인식하지 않도록 처리 --> 
+		SELECT * FROM (SELECT a.*,rownum rnum FROM(SELECT * FROM aboard ORDER BY num DESC)a) <![CDATA[WHERE rnum >= #{start} AND rnum <= #{end}]]>
+	</select>
+	
+	<!-- 글상세 -->											<!-- BoardDAOImpl파일에서 public BoardVO selectBoard(int num) 인자명을 입력 -->
+	<select id="selectBoard" resultType="boardVO" parameterType="integer">
+		SELECT * FROM aboard WHERE num = #{num}
+	</select>
+	
+	<!-- 글수정 -->
+	<update id="updateBoard" parameterType="boardVO">		<!-- 자바빈에 있는 데이터 호출 -->
+		UPDATE aboard SET writer=#{writer}, title=#{title}, content=#{content} WHERE num = #{num}
+	</update>
+	
+	<!-- 글삭제 -->
+	<delete id="deleteBoard" parameterType="integer">
+		DELETE FROM aboard WHERE num=#{num}
+	</delete>
+
+</mapper>
+
+
+
+
+
+
