@@ -1,0 +1,7 @@
+dataconfig:
+  rememberme-key: hayden
+  db-url: jdbc:oracle:thin:@localhost:1521:xe
+  db-username: user001
+  db-password: 1234
+  naver-client-id: PPJDiC3BNDi3uGhs0FV3
+  naver-client-secret: Qv8bptISsQ

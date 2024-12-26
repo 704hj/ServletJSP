@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<!-- tiles 설정파일 -->
+<!-- 어떤 템플릿(layout_basic.jsp)과 어떤 내용을 사용할지 정의 -->
+
+<tiles-definitions><!-- name="main"으로 호출하면 layout가 작동하면서 자동으로 웹상에서 하나로 보여지게 합쳐줌  -->
+    <!-- 부모 Definition 정의 -->
+    <!-- tiles 설정명 -->
+    <!-- 사용자 -->
+    <definition name="main" template="/WEB-INF/views/template/layout_basic.jsp">
+    <!--put-attribute : 템플릿의 특정 영역(헤더, 메뉴, 본문, 푸터 등)에 포함될 JSP 파일을 지정.  -->
+		<put-attribute name="title" value="SpringPage"/>  
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>  	
+		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp"/> 
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/> 
+    </definition>
+    
+    <!-- 관리자 -->
+    <definition name="admin" template="/WEB-INF/views/template/layout_admin.jsp">
+		<put-attribute name="title" value="관리자페이지"/>  
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>  	
+		<put-attribute name="nav" value="/WEB-INF/views/template/nav_admin.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/main/admin.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/> 
+    </definition>
+</tiles-definitions>

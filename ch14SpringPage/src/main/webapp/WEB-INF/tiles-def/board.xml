@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<!-- tiles 설정파일 -->
+<!-- 어떤 템플릿(layout_basic.jsp)과 어떤 내용을 사용할지 정의 -->
+
+<tiles-definitions><!-- name="main"으로 호출하면 layout가 작동하면서 자동으로 웹상에서 하나로 보여지게 합쳐줌  -->
+    <!-- 부모 Definition 정의 -->
+    <!-- tiles 설정명 -->
+    <definition name="boardList" extends="main">
+    <!--put-attribute : 템플릿의 특정 영역(헤더, 메뉴, 본문, 푸터 등)에 포함될 JSP 파일을 지정.  -->
+		<put-attribute name="title" value="게시판 목록"/>  
+		<put-attribute name="css" value="/WEB-INF/views/board/boardCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/board/boardList.jsp"/>
+    </definition>
+    <!-- controller파일에서 return "boardWrite"; 그래서 name값이 boardWrite. -> 아래 작성한 jsp를 만들어야함.-->
+    <definition name="boardWrite" extends="main">
+    <!--put-attribute : 템플릿의 특정 영역(헤더, 메뉴, 본문, 푸터 등)에 포함될 JSP 파일을 지정.  -->
+		<put-attribute name="title" value="게시판 목록"/>  
+		<put-attribute name="css" value="/WEB-INF/views/board/boardCSS.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/board/boardWrite.jsp"/>
+    </definition>
+</tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

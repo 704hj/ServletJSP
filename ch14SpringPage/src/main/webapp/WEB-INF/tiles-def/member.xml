@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<!-- tiles 설정파일 -->
+<!-- 어떤 템플릿(layout_basic.jsp)과 어떤 내용을 사용할지 정의 -->
+
+<tiles-definitions><!-- name="main"으로 호출하면 layout가 작동하면서 자동으로 웹상에서 하나로 보여지게 합쳐줌  -->
+    <!-- 부모 Definition 정의 -->
+    <!-- tiles 설정명 -->
+    <definition name="memberRegister" extends="main">
+    <!--put-attribute : 템플릿의 특정 영역(헤더, 메뉴, 본문, 푸터 등)에 포함될 JSP 파일을 지정.  -->
+		<put-attribute name="title" value="회원가입"/>  
+		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>  	
+		<put-attribute name="body" value="/WEB-INF/views/member/memberRegister.jsp"/> 
+    </definition>
+    <definition name="memberLogin" extends="main">
+		<put-attribute name="title" value="회원로그인"/>  
+		<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>  	
+		<put-attribute name="body" value="/WEB-INF/views/member/memberLogin.jsp"/> 
+    </definition>
+    
+    <!-- MyPage -->
+    <definition name ="myPage" template="/WEB-INF/views/template/layout_mypage.jsp">
+    	<put-attribute name="title" value="MyPage"/>
+    	<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+    	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+    	<put-attribute name="nav" value="/WEB-INF/views/template/nav_mypage.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/memberView.jsp"/>
+    	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
+    </definition>
+    
+     <definition name="memberModify" extends="myPage">
+		<put-attribute name="title" value="회원정보 수정"/>  
+		<put-attribute name="body" value="/WEB-INF/views/member/memberModify.jsp"/>
+    </definition>
+    <definition name="memberChangePassword" extends="myPage">
+		<put-attribute name="title" value="비밀번호 변경"/>  
+		<put-attribute name="body" value="/WEB-INF/views/member/memberChangePassword.jsp"/>
+    </definition>
+    
+    <!-- 관리자 -->
+    <definition name="admin_memberList" extends="admin">
+    	<put-attribute name="title" value="회원목록(관리자전용)"/>  
+    	<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/admin_list.jsp"/>
+    </definition>
+    
+    <definition name="admin_memberModify" extends="admin">
+    	<put-attribute name="title" value="회원권한변경(관리자전용)"/>  
+    	<put-attribute name="css" value="/WEB-INF/views/member/memberCSS.jsp"/>
+    	<put-attribute name="body" value="/WEB-INF/views/member/admin_modify.jsp"/>
+    </definition>
+    
+</tiles-definitions>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

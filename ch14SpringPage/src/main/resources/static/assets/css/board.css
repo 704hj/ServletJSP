@@ -1,0 +1,6 @@
+@charset "UTF-8";
+/* 게시판 목록
+----------------------------*/
+form#search_form #order{
+	height:32px;
+}

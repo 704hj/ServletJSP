@@ -1,0 +1,112 @@
+@charset "UTF-8";
+/* 회원 등록,수정,삭제 폼
+---------------------------------------*/
+#member_register{
+	width:800px;
+}
+#member_register ul,#member_modify ul{
+	padding-left:120px;
+}
+#member_register input[id="id"], #member_register input[id="nick_name"], #member_modify input[id="nick_name"]{
+		width:250px;
+		}
+#member_register input[id="zipcode"], #member_modify input[id="zipcode"]{
+	width:220px;
+}
+#member_register select{
+	width:350px;
+}
+#member_modify select{
+	width:350px;
+}
+#member_modify{
+	width:96%;
+}
+#member_delete input[id="id"],#member_delete input[id="passwd"]{
+	width:240px;
+}
+/* 로그인
+---------------------------------------*/
+#member_login{
+	width:320px;
+	padding:0;
+	margin:0 auto;
+	border:none;
+}
+#member_login ul{
+	padding:0;
+}
+#member_login .login-btn{
+	width:320px;
+}
+#member_login labelp[for="auto"]{
+	width:200px;
+	padding:0 0 5px 0;
+}
+
+.floating-label {/*floating label 설정*/
+  position: relative;
+}
+.floating-label > .form-input{
+  width:300px;	
+  height: 32px;
+  padding: 0.55rem 0.55rem;
+}
+.floating-label > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1.25rem 0.65rem;
+  transition: all 0.25s;
+}
+.floating-label > .form-input::placeholder{
+  color: transparent;
+}
+.floating-label > .form-input:focus, .floating-label > .form-input:not(:placeholder-shown){
+  padding-top: 1.125rem;
+  padding-bottom: 0.125rem;
+}
+.floating-label > .form-input:focus + label,
+.floating-label > .form-input:not(:placeholder-shown) + label{/*선택자A+선택자B : 선택자A 바로 뒤에 위치하는 선택자B만 선택*/
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(-0.5rem);
+}
+/* 회원권한 수정 폼
+---------------------------------------*/
+#modify_form ul li span{
+	width:110px;
+	display:inline-block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
