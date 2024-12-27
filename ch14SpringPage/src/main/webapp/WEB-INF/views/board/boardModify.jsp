@@ -35,7 +35,7 @@
 				<c:if test="${!empty boardVO.filename}">
 				<div id="file_detail">
 					(${boardVO.filename})파일이 등록되어 있습니다.
-					<input type="button" value="파일 삭제" id="file_del" data-header="${_csrf.headerName}" data-token="${_csrf.token}">
+					<input type="button" value="파일 삭제" id="file_del">
 				</div>
 				<script type="text/javascript">
 				$(function(){
@@ -64,8 +64,8 @@
 								}
 							})
 						}
-					})
-				})
+					});
+				});
 				</script>
 				</c:if>
 			</li>
