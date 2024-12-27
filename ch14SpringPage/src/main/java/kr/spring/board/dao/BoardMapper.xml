@@ -99,6 +99,19 @@
 		<!-- 작성 후 boardServiceimpl -->
 	</select>
 	
+	<!-- 게시판 글 수정 -->
+	<update id="updateBoard" parameterType="boardVO">
+		UPDATE spboard SET
+			<if test="filename != null">
+				filename=#{filename},
+			</if>
+			title=#{title},
+			content=#{content},
+			ip=#{ip},
+			modify_date=SYSDATE
+		WHERE board_num=#{board_num}
+	</update>
+	
 </mapper>
 
 

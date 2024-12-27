@@ -34,12 +34,12 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public BoardVO selectBoard(Long board_num) {
-		return null;
+		return boardMapper.selectBoard(board_num);
 	}
 
 	@Override
 	public void updateHit(Long board_num) {
-		
+		boardMapper.updateHit(board_num);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void deleteFile(Long board_num) {
-		
+		boardMapper.deleteFile(board_num);
 	}
 	
 

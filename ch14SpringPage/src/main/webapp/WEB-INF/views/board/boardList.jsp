@@ -6,12 +6,16 @@
 	<sec:authentication property="principal" var="principal"/>
 </sec:authorize>
 <!-- 게시판 목록 시작 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/member.register.js"></script>
 <script type="text/javascript">
 	let result = '${result}';
 	if(result == 'success'){
 		alert('글 등록이 완료되었습니다.');
 	}
 </script>
+
+
 <div class="page-main">
 	<h2>게시판 목록</h2>
 	<div>
@@ -33,7 +37,7 @@
 				</select>
 			</li>
 			<li>
-				<input type="search" name="keyword" value="${param.keyoword}">
+				<input type="search" name="keyword" id="keyword" value="${param.keyoword}">
 			</li>
 			<li>
 				<input type="submit" value="찾기">
@@ -43,7 +47,7 @@
 			<select id="order" name="order">
 				<option value="1" <c:if test="${param.order == 1}">selected</c:if>>최신순</option>
 				<option value="2" <c:if test="${param.order == 2}">selected</c:if>>조회수</option>
-				<option value="3" <c:if test="${param.order == 3}">selected</c:if>>최신순</option>
+				<option value="3" <c:if test="${param.order == 3}">selected</c:if>>좋아요</option>
 				<option value="4" <c:if test="${param.order == 4}">selected</c:if>>댓글수</option>
 			</select>
 			<script>

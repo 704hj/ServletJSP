@@ -123,6 +123,56 @@ public class BoardController {
 		return "boardList";//boardList로 간다
 	}
 
+	
+	/*==============================
+	 * 	게시판 글 상세
+	 * =============================*/
+	@GetMapping("/detail")
+	public String process(long board_num,Model model) {
+		log.debug("<<게시판 글상세 - board_num>> :" +board_num);
+		//해당 글의 조회수 증가 
+		boardService.updateHit(board_num);
+		
+		BoardVO board = boardService.selectBoard(board_num);
+		
+		model.addAttribute("board",board);
+		return "boardView";
+	}
+	//파일 다운로드
+	@GetMapping("/file")
+	public String download(long board_num,HttpServletRequest request,Model model) {
+		BoardVO board = boardService.selectBoard(board_num);
+		byte[] downloadFile = FileUtil.getBytes(request.getServletContext().getRealPath("/assets/upload")+"/"+board.getFilename());
+		
+		//다운로드 넘기는건 model역할
+		model.addAttribute("downloadFile", downloadFile);
+		model.addAttribute("filename", board.getFilename());
+		
+		return "downloadView";
+	}
+	
+	/*==============================
+	 * 	게시판 글 수정
+	 * =============================*/
+	//수정 폼
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("/update")
+	public String formUpdate(long board_num,Model model,@AuthenticationPrincipal PrincipalDetails principal) {
+		BoardVO boardVO = boardService.selectBoard(board_num);
+		//로그인한 회원번호와 작성자 회원번호 불일치
+		//DB에 저장된 파일 정보 구하기
+		if(principal.getMemberVO().getMem_num() != boardVO.getMem_num()) {
+			
+			//로그인한 회원번호와 작성자 회원번호 불일치
+			return "redirect:/common/accessDenied";
+		}
+		
+		model.addAttribute("boardVO",boardVO);
+		
+		return "boardModify";
+	}
+	//수정 폼에서 전송된 데이터 처리
+	
 }
 
 

@@ -151,7 +151,10 @@ public class MemberController {
 	
 	//프로필 사진 출력(회원번호 지정)
 	@GetMapping("/viewProfile")
-	public String getProfileByMem_num() {
+	public String getProfileByMem_num(long mem_num,HttpServletRequest request,Model model) {
+		MemberVO memberVO = memberService.selectMember(mem_num);
+			viewProfile(memberVO, request, model);
+			
 		return "imageView";
 	}
 	

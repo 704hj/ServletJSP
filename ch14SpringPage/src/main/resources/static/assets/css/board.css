@@ -4,3 +4,29 @@
 form#search_form #order{
 	height:32px;
 }
+/* 게시판 목록
+----------------------------*/
+form#search_form #order{
+	height:32px;
+}
+/* 게시판 글 상세
+----------------------------*/
+ul.detail-info{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+ul.detail-info li{
+	margin:0;
+	padding-top:5px;
+	display:inline-block;
+}
+ul.detail-info li:last-child{
+	vertical-align:top;
+}
+.detail-img{
+	max-width:500px;
+}
+.detail-content img{
+	max-width:940px;
+}
