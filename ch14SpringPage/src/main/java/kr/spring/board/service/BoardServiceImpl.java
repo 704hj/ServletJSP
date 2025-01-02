@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.board.dao.BoardMapper;
+import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
 @Service
@@ -44,17 +46,82 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void updateBoard(BoardVO board) {
-		
+		boardMapper.updateBoard(board);
 	}
 
 	@Override
 	public void deleteBoard(Long board_num) {
+		//댓글이 존재하면 댓글을 우선 삭제하고 부모글을 삭제
+		boardMapper.deleteReplyByBoardNum(board_num);
+		//부모글 좋아요 삭제
+		boardMapper.deleteFavByBoardNum(board_num);
+		boardMapper.deleteBoard(board_num);
 		
 	}
 
 	@Override
 	public void deleteFile(Long board_num) {
 		boardMapper.deleteFile(board_num);
+	}
+
+	@Override
+	public List<BoardReplyVO> selectListReply(Map<String, Object> map) {
+		return boardMapper.selectListReply(map);
+	}
+
+	@Override
+	public Integer selectRowContReply(Map<String, Object> map) {
+		return boardMapper.selectRowContReply(map);
+	}
+
+	@Override
+	public void insertReply(BoardReplyVO boardReply) {
+		boardMapper.insertReply(boardReply);
+		
+	}
+
+	@Override
+	public BoardReplyVO selectReply(Long re_num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateReply(BoardReplyVO boardReply) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteReply(Long re_num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteReplyByBoardNum(Long board_num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public BoardFavVO selectFav(BoardFavVO fav) {
+		return boardMapper.selectFav(fav);
+	}
+
+	@Override
+	public Integer selectFavCount(Long board_num) {
+		return boardMapper.selectFavCount(board_num);
+	}
+
+	@Override
+	public void insertFav(BoardFavVO fav) {
+		boardMapper.insertFav(fav);
+	}
+
+	@Override
+	public void deleteFav(BoardFavVO fav) {
+		boardMapper.deleteFav(fav);
 	}
 	
 

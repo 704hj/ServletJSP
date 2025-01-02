@@ -87,7 +87,7 @@ public class MemberAjaxController {
 			memberService.updateProfile(memberVO);
 			mapAjax.put("result", "success"); //mapAjax통신이니까 스크립트 작업해야함 ->js
 			
-		}catch(Exception e) {
+		}catch(NullPointerException e) {
 			mapAjax.put("result","logout");
 		}
 	
