@@ -1,5 +1,6 @@
 package kr.spring.board.vo;
 
+import kr.spring.util.DurationFromNow;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,5 +23,12 @@ public class BoardReplyVO {
 	//로그인 한 상태에서 클릭한 사람의 정보 읽기, 로그인 하지 않으면 0, 전달하면 1
 	private long click_num;
 	private int refav_cnt;
+	
+	public void setRe_date(String re_date) {
+		this.re_date = DurationFromNow.getTimeDiffLabel(re_date);
+	}
+	public void setRe_mdate(String re_mdate) {
+		this.re_mdate = DurationFromNow.getTimeDiffLabel(re_mdate);
+	}
 
 }

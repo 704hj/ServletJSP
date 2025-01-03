@@ -159,7 +159,7 @@ public class BoardAjaxController {
 		return mapJson;
 	}
 	/*===================
-	 * 댓글 등록
+	 * 댓글 목록
 	 *===================*/	
 	@GetMapping("/listReply")
 	@ResponseBody
@@ -191,10 +191,73 @@ public class BoardAjaxController {
 		Map<String,Object> mapJson = new HashMap<String,Object>();
 		mapJson.put("list", list);
 		mapJson.put("count", count);
+		//로그인한 회원번호와 작성자 회원번호 일치 여부를 체크하기 위해 로그인한 회원번호 전송
+		if(principal!=null) {
+			mapJson.put("user_num", principal.getMemberVO().getMem_num());
+		}
 				
 		return mapJson;
 	}
+	/*===================
+	 * 댓글 수정
+	 *===================*/	
+	@PostMapping("/updateReply")
+	@ResponseBody
+	public Map<String,String> modifyReply(
+						BoardReplyVO boardReplyVO,
+						@AuthenticationPrincipal PrincipalDetails principal,
+						HttpServletRequest request){
+		log.debug("<<댓글 수정>> : " + boardReplyVO);
+		
+		Map<String,String> mapJson = new HashMap<String,String>();
+		
+		BoardReplyVO db_reply = boardService.selectReply(boardReplyVO.getRe_num());
+		if(principal==null) {
+			//로그인이 되지 않은 경우
+			mapJson.put("result", "logout");
+		}else if(principal.getMemberVO().getMem_num() == db_reply.getMem_num()) {
+			//로그인 회원번호와 작성자 회원번호 일치
+			//IP 저장
+			boardReplyVO.setRe_ip(request.getRemoteAddr());
+			//댓글 수정
+			boardService.updateReply(boardReplyVO);
+			mapJson.put("result", "success");
+		}else {
+			//로그인 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
 	
+	
+	/*===================
+	 * 댓글 삭제
+	 *===================*/	
+	@GetMapping("/deleteReply")
+	@ResponseBody
+	public Map<String,String> deleteReply(
+					long re_num,
+					@AuthenticationPrincipal PrincipalDetails principal){
+		
+		log.debug("<<댓글 삭제 - re_num>> : " + re_num);
+		Map<String,String> mapJson = new HashMap<String,String>();
+		BoardReplyVO db_reply = boardService.selectReply(re_num);
+		
+		if(principal==null) {
+			//로그인이 되어있지 않음
+			mapJson.put("result", "logout");
+		}else if(principal.getMemberVO().getMem_num() == db_reply.getMem_num()) {
+			//로그인한 회원번호와 작성자 회원번호 일치
+			boardService.deleteReply(re_num);
+			mapJson.put("result", "success");
+		}else {
+			//로그인한 회원번호와 작성자 회원번호 불일치
+			mapJson.put("result", "wrongAccess");
+		}
+		
+		return mapJson;
+	}
 	
 }
 

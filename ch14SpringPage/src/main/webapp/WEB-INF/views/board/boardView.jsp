@@ -58,6 +58,8 @@
 		  data-token="${_csrf.token}"
 		  src="${pageContext.request.contextPath}/assets/images/fav01.gif" width="40">
 		<span id="output_fcount"></span>
+		<%-- 댓글수 --%>
+		<span id="output_rcount"></span>
 	</div>
 	<hr size="1" width="100%">
 	<div class="align-right">

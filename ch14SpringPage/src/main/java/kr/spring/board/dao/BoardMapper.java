@@ -23,6 +23,7 @@ public interface BoardMapper {
 	@Update("UPDATE spboard SET hit=hit+1 WHERE board_num=#{board_num}")
 	public void updateHit(Long board_num);
 	public void updateBoard(BoardVO board);
+	@Delete("DELETE FROM spboard_reply WHERE re_num=#{re_num}")
 	public void deleteBoard(Long board_num);
 	@Update("UPDATE spboard SET filename='' WHERE board_num=#{board_num}")
 	public void deleteFile(Long board_num);
@@ -44,10 +45,15 @@ public interface BoardMapper {
 	@Select("SELECT COUNT(*) FROM spboard_reply WHERE board_num=#{board_num}")
 	public Integer selectRowContReply(Map<String,Object> map);
 	public void insertReply(BoardReplyVO boardReply);
+	//댓글 수정, 삭제시 작성자 회원번호를 구하기 위해 사용
+	@Select("SELECT * FROM spboard_reply WHERE re_num=#{re_num}")
 	public BoardReplyVO selectReply(Long re_num);
+	@Update("UPDATE spboard_reply SET re_content=#{re_content},re_ip=#{re_ip},re_mdate=SYSDATE WHRER re_num=#{re_num}")
 	public void updateReply(BoardReplyVO boardReply);
+	@Delete("DELETE FROM spboard_reply WHERE re_num=#{re_num}")
 	public void deleteReply(Long re_num);
 	//부모글 삭제시 댓글이 존재하면 부모글 삭제 전 댓글 삭제
+	@Delete("DELETE FROM spboard_reply WHERE board_num=#{board_num}")
 	public void deleteReplyByBoardNum(Long board_num);
 	
 	//댓글 좋아요

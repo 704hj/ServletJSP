@@ -31,6 +31,8 @@ public interface BoardService {
 	public BoardReplyVO selectReply(Long re_num);
 	public void updateReply(BoardReplyVO boardReply);
 	public void deleteReply(Long re_num);
-	//부모글 삭제시 댓글이 존재하면 부모글 삭제 전 댓글 삭제
-	public void deleteReplyByBoardNum(Long board_num);
+	//부모글 삭제시 댓글이 존재하면 부모글 삭제 전 댓글 삭제 -> Mapper에 public void deleteBoard(Long board_num) 명시했기 때문에 Mapper에서 호출만 하면 됨 
+	//public void deleteReplyByBoardNum(Long board_num);
+	
+	
 }
