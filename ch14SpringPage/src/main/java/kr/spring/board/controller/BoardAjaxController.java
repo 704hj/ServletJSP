@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.spring.board.service.BoardService;
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 import kr.spring.member.vo.MemberVO;
@@ -180,6 +181,12 @@ public class BoardAjaxController {
 		PagingUtil page = new PagingUtil(pageNum,count,rowCount);
 		map.put("start", page.getStartRow());
 		map.put("end", page.getEndRow());
+		//==댓글 좋아요
+		if(principal!=null) {
+			map.put("mem_num", principal.getMemberVO().getMem_num());
+		}else {
+			map.put("mem_num", 0);
+		}
 		
 		List<BoardReplyVO> list = null;
 		if(count > 0) {
@@ -258,6 +265,39 @@ public class BoardAjaxController {
 		
 		return mapJson;
 	}
+	
+	/*===================
+	 * 댓글 좋아요 등록/삭제
+	 *===================*/	
+	@PostMapping("/writeReFav")
+	@ResponseBody
+	public Map<String,Object> writeReFav(
+						BoardReFavVO fav,
+						@AuthenticationPrincipal
+						PrincipalDetails principal){
+		log.debug("<<댓글 좋아요 등록/삭제>> : " + fav);
+		
+		Map<String,Object> mapJson = new HashMap<String,Object>();
+		
+		if(principal==null) {
+			mapJson.put("result", "logout");
+		}else {
+			//로그인 된 회원번호 셋팅
+			fav.setMem_num(principal.getMemberVO().getMem_num());
+			BoardReFavVO boardReFav = boardService.selectReFav(fav);
+			if(boardReFav!=null) {
+				boardService.deleteReFav(fav);
+				mapJson.put("status", "nofav");
+			}else {
+				boardService.insertReFav(fav);
+				mapJson.put("status", "yesfav");
+			}
+			mapJson.put("result", "success");
+			mapJson.put("count", boardService.selectReFavCount(fav.getRe_num()));
+		}
+		return mapJson;
+	}
+	
 	
 }
 

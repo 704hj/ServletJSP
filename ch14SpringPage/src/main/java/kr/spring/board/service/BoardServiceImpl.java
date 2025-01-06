@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kr.spring.board.dao.BoardMapper;
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
@@ -51,10 +52,13 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void deleteBoard(Long board_num) {
+		//댓글 좋아요 삭제
+		boardMapper.deleteReFavByBoardNum(board_num);
 		//댓글이 존재하면 댓글을 우선 삭제하고 부모글을 삭제
 		boardMapper.deleteReplyByBoardNum(board_num);
 		//부모글 좋아요 삭제
 		boardMapper.deleteFavByBoardNum(board_num);
+		//부모글 삭제 (삭제 순서를 지켜야함)
 		boardMapper.deleteBoard(board_num);
 		
 	}
@@ -92,6 +96,9 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void deleteReply(Long re_num) {
+		//댓글 좋아요 삭제
+		boardMapper.deleteReFavByReNum(re_num);
+		//댓글 삭제
 		boardMapper.deleteReply(re_num);
 	}
 
@@ -114,6 +121,26 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void deleteFav(BoardFavVO fav) {
 		boardMapper.deleteFav(fav);
+	}
+
+	@Override
+	public BoardReFavVO selectReFav(BoardReFavVO fav) {
+		return boardMapper.selectReFav(fav);
+	}
+
+	@Override
+	public Integer selectReFavCount(Long re_num) {
+		return boardMapper.selectReFavCount(re_num);
+	}
+
+	@Override
+	public void insertReFav(BoardReFavVO fav) {
+		boardMapper.insertReFav(fav);
+	}
+
+	@Override
+	public void deleteReFav(BoardReFavVO fav) {
+		boardMapper.deleteReFav(fav);
 	}
 	
 

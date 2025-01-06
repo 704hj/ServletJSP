@@ -64,6 +64,14 @@ $(function(){
 					output += '<div class="sub-item">';
 					output += '<p>' + item.re_content.replace(/\r\n/g,'<br>') + '</p>';
 					
+					//좋아요 시작
+					if(item.click_num==0 || param.user_num!=click_num){
+						output += ' <img class="output-rfav" src="../assets/images/heart01.png" data_num="'+item.re_num+'"> <span class="output-rfcount">'+item.refav_cnt+'</span>';
+					}else{
+						output += ' <img class="output-rfav" src="../assets/images/heart02.png" data_num="'+item.re_num+'"> <span class="output-rfcount">'+item.refav_cnt+'</span>';
+					}
+					//좋아요 끝
+					
 					if(param.user_num==item.mem_num){
 						//로그인 한 회원번호와 댓글 작성자 회원번호가 일치
 						output += ' <input type="button" data-num="'+item.re_num+'" value="수정" class="modify-btn">';
@@ -199,6 +207,53 @@ $(function(){
 		$('#mre_form').remove();
 	}
 	//댓글 수정
+	$(document).on('submit','#mre_form',function(event){
+		if($('#mre_content').val().trim()==''){
+			alert('내용을 입력하세요!');
+			$('#mre_content').val('').focus();
+			return false;
+		}
+		//폼에 입력한 데이터 반환
+		let form_data = $(this).serialize();
+		//서버와 통신
+		$.ajax({
+			url:'updateReply',
+			type:'post',
+			data:form_data,
+			dataType:'json',
+			beforeSend:function(xhr){
+				xhr.setRequestHeader($('#csrfHeaderName').val(),
+									$('#csrfTokenValue').val());
+			},
+			success:function(param){
+				if(param.result == 'logout'){
+					alert('로그인해야 수정할 수 있습니다.');
+				}else if(param.result == 'success'){
+					$('#mre_form').parents().find('p').html($('#mre_content').val().replace(/</g,'&lt;')
+																					.replace(/>/g,'&gt;')
+																					.replace(/\r\n/g,'<br>')
+																					.replace(/\r/g,'<br>')
+																					.replace(/\n/g,'<br>'));
+					//최근 수정일 처리
+					$('#mre_form').parent().find('.modify-date').text('최근 수정일 : 5초미만');
+					//수정폼 초기화
+					initModifyForm();
+				}else if(param.result == 'wrongAccess'){
+					alert('타인의 글은 수정할 수 없습니다.')
+				}else{
+					alert('댓글 수정 오류 발생');
+				}
+			},
+			error:function(){
+				alert('네트워크 오류 발생');
+				
+			}
+		});
+		
+		//기본 이벤트 제거
+		event.preventDefault();
+		
+	});
 	
 		
 	

@@ -4,6 +4,25 @@
 form#search_form #order{
 	height:32px;
 }
+
+/*게시판 폼 (CKEditor 사용시)*/
+form#board_register, form#board_modify{
+    padding:0 0 10px 0;
+    width:800px;
+    border:none;
+}
+form#board_register ul, form#board_modify ul{
+    padding:20px;
+}
+form#board_register input[type="text"],form#board_modify input[type="text"]{
+    width:745px;
+    margin-bottom:10px;
+}
+.ck-editor__editable_inline{
+    min-height:250px;
+}
+
+
 /* 게시판 글상세
 --------------------*/
 ul.detail-info{
@@ -25,7 +44,7 @@ ul.detail-info li:last-child{
 .detail-content img{
 	max-width:940px;
 }
-#output_fav, .output_rfav{
+#output_fav, .output-rfav{
 	cursor : pointer;
 }
 #output_fcount{

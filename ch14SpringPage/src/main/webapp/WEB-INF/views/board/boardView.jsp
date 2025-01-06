@@ -10,6 +10,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/board.fav.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/board.reply.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/videoAdapter.js"></script>
 <div class="page-main">
 	<h2>[${board.categoryName}]${board.title}</h2>	
 	<ul class="detail-info">

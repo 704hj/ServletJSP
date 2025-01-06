@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!-- 게시판 글쓰기 시작 -->
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/ckeditor.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/uploadAdapter.js"></script>
 <div class="page-main">
 	<h2>글쓰기</h2>
 	<form:form modelAttribute="boardVO" action="write" id="board_register" enctype="multipart/form-data">
@@ -19,14 +23,32 @@
 				<form:errors path="category"/>
 			</li>	
 			<li>
-				<form:label path="title">제목</form:label>
+				<%-- <form:label path="title">제목</form:label> --%>
 				<form:input path="title" placeholder="제목을 입력하세요."/>
 				<form:errors path="title" cssClass="error-color"/>
 			</li>
 			<li>
-				<form:label path="content">내용</form:label>
+				<%-- <form:label path="content">내용</form:label> --%>
 				<form:textarea path="content"/>
 				<form:errors path="content" cssClass="error-color"/>
+				<%-- CKEditor 셋팅 --%>
+                <script>
+                    function MyCustomUploadAdapterPlugin(editor){
+                        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                            return new UploadAdapter(loader);
+                        }
+                    }
+                    ClassicEditor.create(document.querySelector('#content'),{
+                        extraPlugins:[MyCustomUploadAdapterPlugin]
+                    })
+                    .then(editor => {
+                        window.editor = editor;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+                </script>
+
 			</li>
 			<li>
 				<form:label path="upload">파일업로드</form:label>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.spring.board.vo.BoardFavVO;
+import kr.spring.board.vo.BoardReFavVO;
 import kr.spring.board.vo.BoardReplyVO;
 import kr.spring.board.vo.BoardVO;
 
@@ -34,5 +35,9 @@ public interface BoardService {
 	//부모글 삭제시 댓글이 존재하면 부모글 삭제 전 댓글 삭제 -> Mapper에 public void deleteBoard(Long board_num) 명시했기 때문에 Mapper에서 호출만 하면 됨 
 	//public void deleteReplyByBoardNum(Long board_num);
 	
-	
+	//댓글 좋아요
+	public BoardReFavVO selectReFav(BoardReFavVO fav);
+	public Integer selectReFavCount(Long re_num);
+	public void insertReFav(BoardReFavVO fav);
+	public void deleteReFav(BoardReFavVO fav);
 }
